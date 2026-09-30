@@ -5,6 +5,7 @@ const dbConnect = require("./dbConfig/dbConnect");
 const {
   userController,
   userUpdateController,
+  addAddress,removeAddress,updateAddress,findCity,addPhone
 } = require("./controller/userControllers");
 
 app.use(express.json());
@@ -13,6 +14,11 @@ dbConnect();
 
 app.post("/create_user", userController);
 app.post("/unpdate_user/:id", userUpdateController);
+app.post("/users/:id/address", addAddress);
+app.delete("/users/:id/address/:addressId", removeAddress);
+app.put("/users/:id/address/:addressID", updateAddress);
+app.get("/users/search",findCity)
+app.patch("/users/:id/phone",addPhone)
 
 const port = process.env.PORT || 5000;
 
