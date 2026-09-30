@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { trim } = require("validator");
 
 const addressSChema = new mongoose.Schema({
   label: {
@@ -7,25 +6,28 @@ const addressSChema = new mongoose.Schema({
     enum: ["home", "office", "other"],
     default: "home",
   },
-  city: { type: String, require: true },
+  city: { type: String },
   area: String,
   zip: String,
 });
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    require: true,
-    trim: true,
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+    },
+    phone: [String],
+    address: [addressSChema],
   },
-  email: {
-    type: String,
-    require: true,
-    unique: true,
-    lowercase: true,
-  },
-  phone: [String],
-  address: [addressSChema],
-},{timestamps: true});
+  { timestamps: true },
+);
 
-module.exports =  mongoose.model("PracticeUser", userSchema)
+module.exports = mongoose.model("PracticeUser", userSchema);
