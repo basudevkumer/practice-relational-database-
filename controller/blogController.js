@@ -68,11 +68,29 @@ const getComments = async (req, res) => {
   }
 };
 
+const getCommentsNested = async (req, res) => {
+  try {
+    const comments = await Comment.find().populate({
+      path: "post",
+      select: "title author",
+      populate: {
+        path: "author",
+        select: "name",
+      },
+    });
+
+    res.json({ success: true, comments });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   createPost,
   createComment,
   getPostRow,
   getPosts,
   getPostsSelect,
-  getComments
+  getComments,
+  getCommentsNested
 };

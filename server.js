@@ -18,7 +18,8 @@ const {
   getPostRow,
   getPosts,
   getPostsSelect,
-  getComments 
+  getComments,
+  getCommentsNested,
 } = require("./controller/blogController");
 
 app.use(express.json());
@@ -45,7 +46,7 @@ app.get("/getpostsselect", getPostsSelect);
 //for comments
 app.post("/comments", createComment);
 app.get("/comments", getComments);
-
+app.get("/comments/nested", getCommentsNested);
 
 //comment
 
