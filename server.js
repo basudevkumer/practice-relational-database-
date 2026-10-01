@@ -5,9 +5,19 @@ const dbConnect = require("./dbConfig/dbConnect");
 const {
   userController,
   userUpdateController,
-  addAddress,removeAddress,updateAddress,findCity,addPhone
+  addAddress,
+  removeAddress,
+  updateAddress,
+  findCity,
+  addPhone,
 } = require("./controller/userControllers");
-const { createPost ,createComment} = require("./controller/blogController");
+
+const {
+  createPost,
+  createComment,
+  getPostRow,
+  getPosts
+} = require("./controller/blogController");
 
 app.use(express.json());
 
@@ -18,14 +28,18 @@ app.post("/unpdate_user/:id", userUpdateController);
 app.post("/users/:id/address", addAddress);
 app.delete("/users/:id/address/:addressId", removeAddress);
 app.put("/users/:id/address/:addressID", updateAddress);
-app.get("/users/search",findCity)
-app.patch("/users/:id/phone",addPhone)
+app.get("/users/search", findCity);
+app.patch("/users/:id/phone", addPhone);
 
 // practice populate
 
 // post
-app.post("/posts", createPost)
-app.post("/comments", createComment)
+app.post("/posts", createPost);
+app.post("/comments", createComment);
+app.get("/rowposts", getPostRow);
+app.get("/rowposts", getPostRow);
+app.get("/getposts", getPosts);
+
 //comment
 
 const port = process.env.PORT || 5000;

@@ -19,5 +19,29 @@ const createComment = async (req, res) => {
   }
 };
 
+// start populate practice
 
-module.exports =  {createPost,createComment}
+const getPostRow = async (req, res) => {
+  try {
+    const posts = await Post.find();
+
+    return res
+      .status(200)
+      .json({ success: true, count: posts.length, data: posts });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// basic populate
+
+const getPosts = async (req, res) => {
+  try {
+    const posts = await Post.find().populate("author");
+    res.json({ success: true, count: posts.length, posts });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { createPost, createComment, getPostRow ,getPosts};
