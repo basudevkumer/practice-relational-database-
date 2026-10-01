@@ -7,6 +7,7 @@ const {
   userUpdateController,
   addAddress,removeAddress,updateAddress,findCity,addPhone
 } = require("./controller/userControllers");
+const { createPost ,createComment} = require("./controller/blogController");
 
 app.use(express.json());
 
@@ -19,6 +20,13 @@ app.delete("/users/:id/address/:addressId", removeAddress);
 app.put("/users/:id/address/:addressID", updateAddress);
 app.get("/users/search",findCity)
 app.patch("/users/:id/phone",addPhone)
+
+// practice populate
+
+// post
+app.post("/posts", createPost)
+app.post("/comments", createComment)
+//comment
 
 const port = process.env.PORT || 5000;
 
