@@ -18,6 +18,7 @@ const {
   getPostRow,
   getPosts,
   getPostsSelect,
+  getComments 
 } = require("./controller/blogController");
 
 app.use(express.json());
@@ -36,11 +37,15 @@ app.patch("/users/:id/phone", addPhone);
 
 // post
 app.post("/posts", createPost);
-app.post("/comments", createComment);
 app.get("/rowposts", getPostRow);
-app.get("/rowposts", getPostRow);
+// app.get("/rowposts", getPostRow);
 app.get("/getposts", getPosts);
 app.get("/getpostsselect", getPostsSelect);
+
+//for comments
+app.post("/comments", createComment);
+app.get("/comments", getComments);
+
 
 //comment
 

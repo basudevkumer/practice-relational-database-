@@ -46,15 +46,33 @@ const getPosts = async (req, res) => {
 
 // selected data to get
 
-const getPostsSelect  =  async (req,res)=>{
+const getPostsSelect = async (req, res) => {
   try {
-    const posts =  await Post.find().populate("author", "name email _id")
-        res.json({ success: true, posts });
-
+    const posts = await Post.find().populate("author", "name email _id");
+    res.json({ success: true, posts });
   } catch (error) {
-        res.status(400).json({ success: false, message: error.message });
-
+    res.status(400).json({ success: false, message: error.message });
   }
-}
+};
 
-module.exports = { createPost, createComment, getPostRow ,getPosts,getPostsSelect };
+//multipole populate to get data
+
+const getComments = async (req, res) => {
+  try {
+    const comments = await Comment.find()
+      .populate("user", "name")
+      .populate("post", "title");
+    res.json({ success: true, comments });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = {
+  createPost,
+  createComment,
+  getPostRow,
+  getPosts,
+  getPostsSelect,
+  getComments
+};
