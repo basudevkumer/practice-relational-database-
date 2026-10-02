@@ -20,7 +20,9 @@ const {
   getPostsSelect,
   getComments,
   getCommentsNested,
+  getCommentsByPost,
 } = require("./controller/blogController");
+const { createProfile } = require("./controller/profileControllers");
 
 app.use(express.json());
 
@@ -47,8 +49,11 @@ app.get("/getpostsselect", getPostsSelect);
 app.post("/comments", createComment);
 app.get("/comments", getComments);
 app.get("/comments/nested", getCommentsNested);
+app.get("/comments/post/:id", getCommentsByPost);
 
-//comment
+//one to one practice 
+
+app.post("/profiles", createProfile)
 
 const port = process.env.PORT || 5000;
 

@@ -85,6 +85,20 @@ const getCommentsNested = async (req, res) => {
   }
 };
 
+const getCommentsByPost = async (req, res) => {
+  try {
+    const comments = await Comment.find({ post: req.params.id })
+      .populate("user", "name")
+      .sort({ createAt: -1 });
+
+    return res
+      .status(200)
+      .json({ success: true, count: comments.length, data: comments });
+  } catch (error) {
+    res.status(400).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   createPost,
   createComment,
@@ -92,5 +106,6 @@ module.exports = {
   getPosts,
   getPostsSelect,
   getComments,
-  getCommentsNested
+  getCommentsNested,
+  getCommentsByPost
 };
