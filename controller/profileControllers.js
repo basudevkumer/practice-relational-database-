@@ -26,6 +26,20 @@ const createProfile = async (req, res) => {
   }
 };
 
+// all profilers
 
+const getProfiles = async (req, res) => {
+  try {
+    const profiles = await PracticeProfile.find().populate(
+      "user",
+      "name email",
+    );
+    return res
+      .status(200)
+      .json({ success: true, count: profiles.length, data: profiles });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
 
-module.exports = { createProfile };
+module.exports = { createProfile ,getProfiles};
