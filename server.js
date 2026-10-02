@@ -22,7 +22,11 @@ const {
   getCommentsNested,
   getCommentsByPost,
 } = require("./controller/blogController");
-const { createProfile, getProfiles } = require("./controller/profileControllers");
+const {
+  createProfile,
+  getProfiles,
+  getProfileByUser,
+} = require("./controller/profileControllers");
 
 app.use(express.json());
 
@@ -51,10 +55,11 @@ app.get("/comments", getComments);
 app.get("/comments/nested", getCommentsNested);
 app.get("/comments/post/:id", getCommentsByPost);
 
-//one to one practice 
+//one to one practice
 
-app.post("/profiles", createProfile)
-app.get("/profiles", getProfiles)
+app.post("/profiles", createProfile);
+app.get("/profiles", getProfiles);
+app.get("/profiles/user/:id", getProfileByUser);
 
 const port = process.env.PORT || 5000;
 

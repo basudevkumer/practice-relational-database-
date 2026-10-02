@@ -42,4 +42,22 @@ const getProfiles = async (req, res) => {
   }
 };
 
-module.exports = { createProfile ,getProfiles};
+const getProfileByUser = async (req, res) => {
+  try {
+    const profile = await PracticeProfile.findOne({
+      user: req.params.id,      
+    }).populate("user", "name email phone");
+
+    if (!profile) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Profile not found" });
+    }
+
+    return res.status(200).json({ success: true, data: profile });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { createProfile, getProfiles, getProfileByUser };
