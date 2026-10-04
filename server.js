@@ -27,6 +27,10 @@ const {
   getProfiles,
   getProfileByUser,
 } = require("./controller/profileControllers");
+const {
+  createCategory,
+  getCategories,
+} = require("./controller/categoryProductControllers");
 
 app.use(express.json());
 
@@ -60,6 +64,11 @@ app.get("/comments/post/:id", getCommentsByPost);
 app.post("/profiles", createProfile);
 app.get("/profiles", getProfiles);
 app.get("/profiles/user/:id", getProfileByUser);
+
+//category
+
+app.post("/categories", createCategory);
+app.get("/categories", getCategories);
 
 const port = process.env.PORT || 5000;
 
