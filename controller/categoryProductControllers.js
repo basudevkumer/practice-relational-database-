@@ -68,8 +68,22 @@ const getProductsByCategory = async (req, res) => {
   }
 };
 
+const getProducts = async (req, res) => {
+  try {
+    const products = await Products.find().populate("category", "name");
 
+    return res
+      .status(200)
+      .json({ success: true, count: products.length, data: products });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
 
-
-
-module.exports = { createCategory, getCategories, createProduct,getProductsByCategory };
+module.exports = {
+  createCategory,
+  getCategories,
+  createProduct,
+  getProductsByCategory,
+  getProducts
+};
