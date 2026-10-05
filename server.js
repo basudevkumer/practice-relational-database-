@@ -31,6 +31,7 @@ const {
   createCategory,
   getCategories,
   createProduct,
+  getProductsByCategory,
 } = require("./controller/categoryProductControllers");
 
 app.use(express.json());
@@ -74,6 +75,7 @@ app.get("/categories", getCategories);
 
 // products 
 app.post("/products", createProduct);
+app.get("/product/category/:categoryId", getProductsByCategory)
 
 const port = process.env.PORT || 5000;
 

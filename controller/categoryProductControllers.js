@@ -47,7 +47,7 @@ const createProduct = async (req, res) => {
 
 const getProductsByCategory = async (req, res) => {
   try {
-    const category = await Category.findById(req.body.params);
+    const category = await Category.findById(req.params.categoryId);
 
     if (!category) {
       return res
@@ -68,4 +68,8 @@ const getProductsByCategory = async (req, res) => {
   }
 };
 
-module.exports = { createCategory, getCategories,createProduct };
+
+
+
+
+module.exports = { createCategory, getCategories, createProduct,getProductsByCategory };
