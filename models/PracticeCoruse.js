@@ -8,7 +8,7 @@ const coruseSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-    instructor: {
+    instuctor: {
       type: String,
       required: true,
       trim: true,

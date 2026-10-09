@@ -34,7 +34,12 @@ const {
   getProductsByCategory,
   getProducts,
 } = require("./controller/categoryProductControllers");
-const { createCourser, getCourses } = require("./controller/studentCourseControllers");
+const {
+  createCourser,
+  getCourses,
+  createStudent,
+  getStudents,
+} = require("./controller/studentCourseControllers");
 
 app.use(express.json());
 
@@ -74,18 +79,19 @@ app.get("/profiles/user/:id", getProfileByUser);
 app.post("/categories", createCategory);
 app.get("/categories", getCategories);
 
-
-// products 
+// products
 app.post("/products", createProduct);
-app.get("/product/category/:categoryId", getProductsByCategory)
-app.get("/products", getProducts)
-
+app.get("/product/category/:categoryId", getProductsByCategory);
+app.get("/products", getProducts);
 
 // course
 
-app.post("/course",createCourser)
-app.get("/courses", getCourses)
+app.post("/course", createCourser);
+app.get("/courses", getCourses);
 
+// student
+app.post("/student", createStudent);
+app.get("/students", getStudents)
 
 const port = process.env.PORT || 5000;
 

@@ -1,7 +1,7 @@
 const Course = require("../models/PracticeCoruse");
 const Student = require("../models/PracticeStudent");
 
-// course students
+// course
 
 const createCourser = async (req, res) => {
   try {
@@ -31,4 +31,36 @@ const getCourses = async (req, res) => {
   }
 };
 
-module.exports = { createCourser,getCourses };
+// create students
+
+const createStudent = async (req, res) => {
+  try {
+    const student = await Student.create(req.body);
+    return res.status(201).json({ success: true, data: student });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Student email already exists" });
+    }
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+// get student with course
+
+const getStudents = async (req, res) => {
+  try {
+    const students = await Student.find().populate(
+      "courses",
+      "title instuctor",
+    );
+    return res
+      .status(200)
+      .json({ success: true, count: students.length, data: students });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { createCourser, getCourses, createStudent ,getStudents};
