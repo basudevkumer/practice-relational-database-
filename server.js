@@ -34,6 +34,7 @@ const {
   getProductsByCategory,
   getProducts,
 } = require("./controller/categoryProductControllers");
+const { createCourser, getCourses } = require("./controller/studentCourseControllers");
 
 app.use(express.json());
 
@@ -78,6 +79,12 @@ app.get("/categories", getCategories);
 app.post("/products", createProduct);
 app.get("/product/category/:categoryId", getProductsByCategory)
 app.get("/products", getProducts)
+
+
+// course
+
+app.post("/course",createCourser)
+
 
 const port = process.env.PORT || 5000;
 

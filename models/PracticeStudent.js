@@ -18,7 +18,7 @@ const studentSchema = new mongoose.Schema(
     courses: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: PracticeCourse,
+        ref: "PracticeCourse",
       },
     ],
   },

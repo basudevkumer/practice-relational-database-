@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { trim } = require("validator");
 
 const coruseSchema = new mongoose.Schema(
   {
@@ -9,7 +8,7 @@ const coruseSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
-    instuctor: {
+    instructor: {
       type: String,
       required: true,
       trim: true,
