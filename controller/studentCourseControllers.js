@@ -63,4 +63,60 @@ const getStudents = async (req, res) => {
   }
 };
 
-module.exports = { createCourser, getCourses, createStudent ,getStudents};
+// enrollment
+
+const enrollmentStudent = async (req, res) => {
+  try {
+    const { courseId } = req.body;
+    const { studentId } = req.params;
+
+    console.log(courseId);
+
+    if (!courseId) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
+    }
+
+    const student = await Student.findByIdAndUpdate(
+      studentId,
+      { $addToSet: { courses: courseId } },
+      { new: true },
+    );
+
+    if (!student) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Student not found" });
+    }
+
+    return res.status(200).json({ success: true, data: student });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+const unEnrollmentStudent = async (req, res) => {
+  try {
+    const { studentId, courseId } = req.params;
+
+    const deleteStudent = await Student.findByIdAndUpdate(
+      studentId,
+      { $pull: { courses: courseId } },
+      { returnDocument: "after" },
+    ).populate("courses", "title");
+
+    return res.status(200).json({ success: true, data: deleteStudent });
+  } catch (error) {
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = {
+  createCourser,
+  getCourses,
+  createStudent,
+  getStudents,
+  enrollmentStudent,
+  unEnrollmentStudent,
+};
