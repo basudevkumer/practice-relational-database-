@@ -84,6 +84,7 @@ app.get("/products", getProducts)
 // course
 
 app.post("/course",createCourser)
+app.get("/courses", getCourses)
 
 
 const port = process.env.PORT || 5000;
