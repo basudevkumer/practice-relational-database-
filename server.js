@@ -41,6 +41,7 @@ const {
   getStudents,
   enrollmentStudent,
   unEnrollmentStudent,
+  getStudentsByCourse,
 } = require("./controller/studentCourseControllers");
 
 app.use(express.json());
@@ -96,7 +97,7 @@ app.post("/student", createStudent);
 app.get("/students", getStudents);
 app.post("/students/:studentId/enroll", enrollmentStudent);
 app.delete("/student/:studentId/course/:courseId", unEnrollmentStudent);
-
+app.get("/course/:courseId/student",getStudentsByCourse)
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

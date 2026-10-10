@@ -112,6 +112,33 @@ const unEnrollmentStudent = async (req, res) => {
   }
 };
 
+//getStudentsByCourse
+
+const getStudentsByCourse = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.courseId);
+
+    if (!course) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Course not found" });
+    }
+
+    const students = await Student.find({
+      courses: course._id,
+    }).select("name email");
+
+    return res.status(200).json({
+      success: true,
+      course: course.title,
+      count: students.length,
+      data: students,
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 module.exports = {
   createCourser,
   getCourses,
@@ -119,4 +146,5 @@ module.exports = {
   getStudents,
   enrollmentStudent,
   unEnrollmentStudent,
+  getStudentsByCourse
 };
