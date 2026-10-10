@@ -43,6 +43,9 @@ const {
   unEnrollmentStudent,
   getStudentsByCourse,
 } = require("./controller/studentCourseControllers");
+const { createVendor, getAllVendors } = require("./controller/vendorController");
+const { createVendorCategory, getAllOwnerWiseCategory } = require("./controller/categoryController");
+const { createSubCategory } = require("./controller/createSubCategory");
 
 app.use(express.json());
 
@@ -98,6 +101,20 @@ app.get("/students", getStudents);
 app.post("/students/:studentId/enroll", enrollmentStudent);
 app.delete("/student/:studentId/course/:courseId", unEnrollmentStudent);
 app.get("/course/:courseId/student",getStudentsByCourse)
+
+
+
+// forvendor
+
+app.post("/vendor", createVendor);
+app.get("/vendor", getAllVendors);
+app.post("/category", createVendorCategory);
+app.get("/category/owner/:id", getAllOwnerWiseCategory);
+app.post("/subcategory", createSubCategory);
+
+
+
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {

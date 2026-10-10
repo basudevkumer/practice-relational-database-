@@ -10,7 +10,9 @@ let createVendor = async (req, res) => {
         .json({ success: false, message: "Name and email are required" });
     }
 
-    let existing = await Vendor.findOne({ email: email.toLowerCase() });
+    email = email.trim().toLowerCase();
+
+    let existing = await Vendor.findOne({ email });
     if (existing) {
       return res
         .status(400)

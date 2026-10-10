@@ -12,6 +12,21 @@ let createSubCategory = async (req, res) => {
       });
     }
 
+    if (!SubCat.base.Types.ObjectId.isValid(parentCategory)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid parentCategory id",
+      });
+    }
+
+    const parent = await Cat.findById(parentCategory);
+    if (!parent) {
+      return res.status(404).json({
+        success: false,
+        message: "Parent category not found",
+      });
+    }
+
     let existingName = await SubCat.findOne({
       name: name.toLowerCase(),
       parentCategory,
@@ -28,7 +43,7 @@ let createSubCategory = async (req, res) => {
     });
 
     await Cat.findByIdAndUpdate(parentCategory, {
-      $push: { subCategory: subCat._id },
+      $addToSet: { subCategory: subCat._id },
     });
 
     res
