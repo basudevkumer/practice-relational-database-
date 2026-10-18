@@ -35,6 +35,10 @@ const {
   getProducts,
 } = require("./controller/categoryProductControllers");
 const {
+  createProduct: createVendorProduct,
+  uploadProductImage,
+} = require("./controller/productController");
+const {
   createCourser,
   getCourses,
   createStudent,
@@ -43,11 +47,15 @@ const {
   unEnrollmentStudent,
   getStudentsByCourse,
 } = require("./controller/studentCourseControllers");
-const { createVendor, getAllVendors } = require("./controller/vendorController");
-const { createVendorCategory, getAllOwnerWiseCategory } = require("./controller/categoryController");
-const { createSubCategory } = require("./controller/createSubCategory");
+const {
+  createSubCategory,
+  getSubCategory,
+  getSubCategoriesByCategory,
+} = require("./controller/subCategoryControllers");
+const { createVendor } = require("./controller/vendorControllers");
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 dbConnect();
 
@@ -87,6 +95,11 @@ app.get("/categories", getCategories);
 
 // products
 app.post("/products", createProduct);
+app.post(
+  "/vendors/:vendorId/products",
+  uploadProductImage,
+  createVendorProduct,
+);
 app.get("/product/category/:categoryId", getProductsByCategory);
 app.get("/products", getProducts);
 
@@ -100,21 +113,16 @@ app.post("/student", createStudent);
 app.get("/students", getStudents);
 app.post("/students/:studentId/enroll", enrollmentStudent);
 app.delete("/student/:studentId/course/:courseId", unEnrollmentStudent);
-app.get("/course/:courseId/student",getStudentsByCourse)
+app.get("/course/:courseId/student", getStudentsByCourse);
 
+// sub cateogry
 
+app.post("/createSubCategory", createSubCategory);
+app.get("/getSubCategory", getSubCategory);
+app.get("/subcategories/category/:categoryId", getSubCategoriesByCategory);
 
-// forvendor
-
-app.post("/vendor", createVendor);
-app.get("/vendor", getAllVendors);
-app.post("/category", createVendorCategory);
-app.get("/category/owner/:id", getAllOwnerWiseCategory);
-app.post("/subcategory", createSubCategory);
-
-
-
-
+//vendor
+app.post("/create-vendor", createVendor)
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
